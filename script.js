@@ -1064,32 +1064,32 @@ var datos = {
 // personalizar iconos
 var iconoEstado = L.icon({
   iconUrl: 'estatal.png',
-  iconSize: [25, 38]
+  iconSize: [26, 42]
 })
 
 var iconoLocal = L.icon({
   iconUrl: 'local.png',
-  iconSize: [25, 38]
+  iconSize: [26, 42]
 })
 
 var iconoMusica= L.icon({
   iconUrl: 'musica.png',
-  iconSize: [25, 38]
+  iconSize: [26, 42]
 })
 
 var iconoRel = L.icon({
   iconUrl: 'religion.png',
-  iconSize: [25, 38]
+  iconSize: [26, 42]
 })
 
 var iconoSind = L.icon({
   iconUrl: 'sindical.png',
-  iconSize: [25, 38]
+  iconSize: [26, 42]
 })
 
 var iconoOtro = L.icon({
   iconUrl: 'otro.png',
-  iconSize: [25, 38]
+  iconSize: [26, 42]
 })
 
 // filtrar capas para cada region de medios
@@ -1142,7 +1142,7 @@ var tropLayer = L.geoJSON(soloTropico, {
 
   onEachFeature: function (feature, layer) {
     // crear el contenido del popup
-    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    var popupContent = "<img src='" + feature.properties.img + "' width= 200px/>" +
     "<br>" +
     "<br>" +
     "<b>Nombre: </b>" + feature.properties.nombre +
@@ -1186,7 +1186,7 @@ var yapLayer = L.geoJSON(soloYapacani, {
 
   onEachFeature: function (feature, layer) {
     // crear el contenido del popup
-    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    var popupContent = "<img src='" + feature.properties.img + "' width= 200px/>" +
     "<br>" +
     "<br>" +
     "<b>Nombre: </b>" + feature.properties.nombre +
@@ -1230,7 +1230,7 @@ var monLayer = L.geoJSON(soloMontero, {
 
   onEachFeature: function (feature, layer) {
     // crear el contenido del popup
-    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    var popupContent = "<img src='" + feature.properties.img + "' width= 200px/>" +
     "<br>" +
     "<br>" +
     "<b>Nombre: </b>" + feature.properties.nombre +
@@ -1274,7 +1274,7 @@ var tYLayer = L.geoJSON(TropYap, {
 
   onEachFeature: function (feature, layer) {
     // crear el contenido del popup
-    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    var popupContent = "<img src='" + feature.properties.img + "' width= 200px/>" +
     "<br>" +
     "<br>" +
     "<b>Nombre: </b>" + feature.properties.nombre +
@@ -1317,7 +1317,7 @@ var yMLayer = L.geoJSON(YapMon, {
 
   onEachFeature: function (feature, layer) {
     // crear el contenido del popup
-    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    var popupContent = "<img src='" + feature.properties.img + "' width= 200px/>" +
     "<br>" +
     "<br>" +
     "<b>Nombre: </b>" + feature.properties.nombre +
@@ -1361,7 +1361,7 @@ var todoLayer = L.geoJSON(todo, {
 
   onEachFeature: function (feature, layer) {
     // crear el contenido del popup
-    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    var popupContent = "<img src='" + feature.properties.img + "' width= 200px/>" +
     "<br>" +
     "<br>" +
     "<b>Nombre: </b>" + feature.properties.nombre +
