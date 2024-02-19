@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 #map {
     width: 100vw;
     height: 93vh;
@@ -5,16 +10,23 @@
 }
 
 nav {
+    top: 0px;
     background-color: #246084;
-    height: 7vh;
     width: 100vw;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-p {
-    margin-left: 50px;
+h3 {
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: "Roboto Slab", serif;
+    padding: 20px;
+    text-align: center;
+}
+
+.haro {
+    color: #6EC4B7;
 }
 
 .legend {
@@ -22,5 +34,5 @@ p {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    right: 10px;
+    bottom: 30px;
   }
