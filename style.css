@@ -1,0 +1,18 @@
+#map {
+    width: 100vw;
+    height: 93vh;
+    margin: 0;
+}
+
+nav {
+    background-color: #246084;
+    height: 7vh;
+    width: 100vw;
+    display: flex;
+}
+
+p {
+    margin-left: 50px;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
