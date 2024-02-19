@@ -16,3 +16,11 @@ p {
     color: white;
     font-family: 'Lato', sans-serif;
 }
+
+.legend {
+    background-color: white; /* Fondo blanco */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    right: 10px;
+  }

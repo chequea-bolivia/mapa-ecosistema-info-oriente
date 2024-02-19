@@ -2,7 +2,7 @@
 let mapa = L.map('map').setView([-17.391, -65.519], 8);
 
 // agregar el mapa base
-let mapaBase = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+let mapaBase = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
 {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -10,7 +10,7 @@ let mapaBase = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyage
 
 mapaBase.addTo(mapa);
 
-// agregar geojson
+// agregar geojson con sus iconos y popups respectivos
 var datos = {
     "type": "FeatureCollection",
     "features": [
@@ -775,7 +775,7 @@ var datos = {
           "facebook": "https://www.facebook.com/RTVCarrasco/?locale=es_LA",
           "tipo": "Televisión",
           "lugar_investigacion": "Trópico y Yapacaní",
-          "tema": "Noticias Locales y Nacionales"
+          "tema": "Noticias sindicales"
         },
         "geometry": {
           "type": "Point",
@@ -1092,7 +1092,34 @@ var iconoOtro = L.icon({
   iconSize: [25, 38]
 })
 
-var geojsonLayer = L.geoJSON(datos, {
+// filtrar capas para cada region de medios
+var soloTropico = datos.features.filter(function(feature) {
+  return feature.properties.lugar_investigacion === "Trópico";
+})
+
+var soloYapacani = datos.features.filter(function(feature) {
+  return feature.properties.lugar_investigacion === "Yapacaní";
+})
+
+var soloMontero = datos.features.filter(function(feature) {
+  return feature.properties.lugar_investigacion === "Montero";
+})
+
+var TropYap = datos.features.filter(function(feature) {
+  return feature.properties.lugar_investigacion === "Trópico y Yapacaní";
+})
+
+var YapMon = datos.features.filter(function(feature) {
+  return feature.properties.lugar_investigacion === "Yapacaní y Montero";
+})
+
+var todo = datos.features.filter(function(feature) {
+  return feature.properties.lugar_investigacion === "Trópico, Yapacaní y Montero";
+})
+
+// agregar iconos y popups
+// tropico
+var tropLayer = L.geoJSON(soloTropico, {
   pointToLayer: function(feature, latlng){
     var tema = feature.properties.tema;
     var icono;
@@ -1122,6 +1149,8 @@ var geojsonLayer = L.geoJSON(datos, {
     "<br>" +
     "<b>Tipo: </b>" + feature.properties.tipo +
     "<br>" +
+    "<b>Tema: </b>" + feature.properties.tema +
+    "<br>" +
     "<b>Departamento: </b>" + feature.properties.departamento +
     "<br>" +
     "<b>Localidad: </b>" + feature.properties.localidad +
@@ -1133,4 +1162,260 @@ var geojsonLayer = L.geoJSON(datos, {
 }
 });
 
-geojsonLayer.addTo(mapa);
+// yapacani
+var yapLayer = L.geoJSON(soloYapacani, {
+  pointToLayer: function(feature, latlng){
+    var tema = feature.properties.tema;
+    var icono;
+
+    // un loop para cada tema de medio
+    if(tema === 'Política Estatal'){
+      icono = iconoEstado;
+    } else if (tema === 'Noticias Locales y Nacionales'){
+      icono = iconoLocal;
+    } else if(tema === 'Música y Entretenimiento'){
+      icono = iconoMusica;
+    } else if(tema === 'Religión'){
+      icono = iconoRel;
+    } else if(tema === 'Noticias sindicales'){
+      icono = iconoSind;
+    } else {icono = iconoOtro;}
+
+    return L.marker(latlng, {icon: icono});
+  },
+
+  onEachFeature: function (feature, layer) {
+    // crear el contenido del popup
+    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    "<br>" +
+    "<br>" +
+    "<b>Nombre: </b>" + feature.properties.nombre +
+    "<br>" +
+    "<b>Tipo: </b>" + feature.properties.tipo +
+    "<br>" +
+    "<b>Tema: </b>" + feature.properties.tema +
+    "<br>" +
+    "<b>Departamento: </b>" + feature.properties.departamento +
+    "<br>" +
+    "<b>Localidad: </b>" + feature.properties.localidad +
+    "<br>" +
+    "<a href='" + feature.properties.facebook + "'>Enlace a Facebook</a>";
+    
+    // agregar el contenido a la capa de puntos
+    layer.bindPopup(popupContent);
+}
+});
+
+// montero
+var monLayer = L.geoJSON(soloMontero, {
+  pointToLayer: function(feature, latlng){
+    var tema = feature.properties.tema;
+    var icono;
+
+    // un loop para cada tema de medio
+    if(tema === 'Política Estatal'){
+      icono = iconoEstado;
+    } else if (tema === 'Noticias Locales y Nacionales'){
+      icono = iconoLocal;
+    } else if(tema === 'Música y Entretenimiento'){
+      icono = iconoMusica;
+    } else if(tema === 'Religión'){
+      icono = iconoRel;
+    } else if(tema === 'Noticias sindicales'){
+      icono = iconoSind;
+    } else {icono = iconoOtro;}
+
+    return L.marker(latlng, {icon: icono});
+  },
+
+  onEachFeature: function (feature, layer) {
+    // crear el contenido del popup
+    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    "<br>" +
+    "<br>" +
+    "<b>Nombre: </b>" + feature.properties.nombre +
+    "<br>" +
+    "<b>Tipo: </b>" + feature.properties.tipo +
+    "<br>" +
+    "<b>Tema: </b>" + feature.properties.tema +
+    "<br>" +
+    "<b>Departamento: </b>" + feature.properties.departamento +
+    "<br>" +
+    "<b>Localidad: </b>" + feature.properties.localidad +
+    "<br>" +
+    "<a href='" + feature.properties.facebook + "'>Enlace a Facebook</a>";
+    
+    // agregar el contenido a la capa de puntos
+    layer.bindPopup(popupContent);
+}
+});
+
+// tropico y yapacani
+var tYLayer = L.geoJSON(TropYap, {
+  pointToLayer: function(feature, latlng){
+    var tema = feature.properties.tema;
+    var icono;
+
+    // un loop para cada tema de medio
+    if(tema === 'Política Estatal'){
+      icono = iconoEstado;
+    } else if (tema === 'Noticias Locales y Nacionales'){
+      icono = iconoLocal;
+    } else if(tema === 'Música y Entretenimiento'){
+      icono = iconoMusica;
+    } else if(tema === 'Religión'){
+      icono = iconoRel;
+    } else if(tema === 'Noticias sindicales'){
+      icono = iconoSind;
+    } else {icono = iconoOtro;}
+
+    return L.marker(latlng, {icon: icono});
+  },
+
+  onEachFeature: function (feature, layer) {
+    // crear el contenido del popup
+    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    "<br>" +
+    "<br>" +
+    "<b>Nombre: </b>" + feature.properties.nombre +
+    "<br>" +
+    "<b>Tipo: </b>" + feature.properties.tipo +
+    "<br>" +
+    "<b>Tema: </b>" + feature.properties.tema +
+    "<br>" +
+    "<b>Departamento: </b>" + feature.properties.departamento +
+    "<br>" +
+    "<b>Localidad: </b>" + feature.properties.localidad +
+    "<br>" +
+    "<a href='" + feature.properties.facebook + "'>Enlace a Facebook</a>";
+    
+    // agregar el contenido a la capa de puntos
+    layer.bindPopup(popupContent);
+}
+});
+// yapacani y montero
+var yMLayer = L.geoJSON(YapMon, {
+  pointToLayer: function(feature, latlng){
+    var tema = feature.properties.tema;
+    var icono;
+
+    // un loop para cada tema de medio
+    if(tema === 'Política Estatal'){
+      icono = iconoEstado;
+    } else if (tema === 'Noticias Locales y Nacionales'){
+      icono = iconoLocal;
+    } else if(tema === 'Música y Entretenimiento'){
+      icono = iconoMusica;
+    } else if(tema === 'Religión'){
+      icono = iconoRel;
+    } else if(tema === 'Noticias sindicales'){
+      icono = iconoSind;
+    } else {icono = iconoOtro;}
+
+    return L.marker(latlng, {icon: icono});
+  },
+
+  onEachFeature: function (feature, layer) {
+    // crear el contenido del popup
+    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    "<br>" +
+    "<br>" +
+    "<b>Nombre: </b>" + feature.properties.nombre +
+    "<br>" +
+    "<b>Tipo: </b>" + feature.properties.tipo +
+    "<br>" +
+    "<b>Tema: </b>" + feature.properties.tema +
+    "<br>" +
+    "<b>Departamento: </b>" + feature.properties.departamento +
+    "<br>" +
+    "<b>Localidad: </b>" + feature.properties.localidad +
+    "<br>" +
+    "<a href='" + feature.properties.facebook + "'>Enlace a Facebook</a>";
+    
+    // agregar el contenido a la capa de puntos
+    layer.bindPopup(popupContent);
+}
+});
+// todo
+
+var todoLayer = L.geoJSON(todo, {
+  pointToLayer: function(feature, latlng){
+    var tema = feature.properties.tema;
+    var icono;
+
+    // un loop para cada tema de medio
+    if(tema === 'Política Estatal'){
+      icono = iconoEstado;
+    } else if (tema === 'Noticias Locales y Nacionales'){
+      icono = iconoLocal;
+    } else if(tema === 'Música y Entretenimiento'){
+      icono = iconoMusica;
+    } else if(tema === 'Religión'){
+      icono = iconoRel;
+    } else if(tema === 'Noticias sindicales'){
+      icono = iconoSind;
+    } else {icono = iconoOtro;}
+
+    return L.marker(latlng, {icon: icono});
+  },
+
+  onEachFeature: function (feature, layer) {
+    // crear el contenido del popup
+    var popupContent = "<img src='" + feature.properties.img + "' width= 230px/>" +
+    "<br>" +
+    "<br>" +
+    "<b>Nombre: </b>" + feature.properties.nombre +
+    "<br>" +
+    "<b>Tipo: </b>" + feature.properties.tipo +
+    "<br>" +
+    "<b>Tema: </b>" + feature.properties.tema +
+    "<br>" +
+    "<b>Departamento: </b>" + feature.properties.departamento +
+    "<br>" +
+    "<b>Localidad: </b>" + feature.properties.localidad +
+    "<br>" +
+    "<a href='" + feature.properties.facebook + "'>Enlace a Facebook</a>";
+    
+    // agregar el contenido a la capa de puntos
+    layer.bindPopup(popupContent);
+}
+});
+
+// agregar capas
+tropLayer.addTo(mapa);
+yapLayer.addTo(mapa);
+monLayer.addTo(mapa);
+tYLayer.addTo(mapa);
+yMLayer.addTo(mapa);
+todoLayer.addTo(mapa);
+
+// agregar filtros y controles
+var overlayLayers = {
+  "Trópico": tropLayer,
+  "Yapacaní": yapLayer,
+  "Montero": monLayer,
+  "Trópico y Yapacaní": tYLayer,
+  "Yapacaní y Montero": yMLayer,
+  "Trópico, Yapacaní y Montero": todoLayer
+};
+
+var controlesLayer = L.control.layers(null, overlayLayers,
+  {collapsed: false});
+controlesLayer.addTo(mapa);
+
+// crear leyenda
+// estamos usando: https://github.com/aazuspan/leaflet-feature-legend
+
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function(mapa) {
+  var div = L.DomUtil.create('div', 'legend');
+  div.innerHTML += '<img src="estatal.png" width= 12px> Política Estatal<br>';
+  div.innerHTML += '<img src="local.png" width= 12px> Local y nacional<br>';
+  div.innerHTML += '<img src="musica.png" width= 12px> Entretenimiento<br>';
+  div.innerHTML += '<img src="religion.png" width= 12px> Religión<br>';
+  div.innerHTML += '<img src="sindical.png" width= 12px> Sindical<br>'
+  return div;
+};
+
+legend.addTo(mapa);
